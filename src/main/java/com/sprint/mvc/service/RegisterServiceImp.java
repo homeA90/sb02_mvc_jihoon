@@ -10,7 +10,7 @@ import static com.sprint.mvc.service.VaildationRegex.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImp implements UserService {
+public class RegisterServiceImp implements RegisterService {
 
     private final UserRepository userRepository;
 

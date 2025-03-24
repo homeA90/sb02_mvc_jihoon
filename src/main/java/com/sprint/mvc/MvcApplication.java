@@ -1,7 +1,8 @@
 package com.sprint.mvc;
 
 import com.sprint.mvc.Dto.SignUpReq;
-import com.sprint.mvc.service.UserService;
+import com.sprint.mvc.entity.Login;
+import com.sprint.mvc.service.RegisterService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,15 +12,20 @@ public class MvcApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(MvcApplication.class, args);
-
-		UserService userService = context.getBean(UserService.class);
+		RegisterService registerService = context.getBean(RegisterService.class);
+		Login login = context.getBean(Login.class);
 
 		SignUpReq signUpReq1 = new SignUpReq("homea90", "1q2w3e4r1234!@", "homea90@naver.com", "gg");
-		userService.signUp(signUpReq1);
+		registerService.signUp(signUpReq1);
 
-		SignUpReq signUpReq2 = new SignUpReq("homea90", "1q2w3e4r1234!@", "homea90@naver.com", "gg");
-		userService.signUp(signUpReq2);
+		login.setUserId(signUpReq1.userId());
+		login.setPassword(signUpReq1.password());
+		boolean result = login.login();
 
-	}
+		if (result) {
+			System.out.println("login success");
+		} else{
+			System.out.println("login failed");
+		}	}
 
 }
