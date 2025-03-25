@@ -1,36 +1,25 @@
 package com.sprint.mvc.controller;
 
-import com.sprint.mvc.entity.Login;
-import org.springframework.stereotype.Controller;
+import com.sprint.mvc.Dto.LoginRep;
+import com.sprint.mvc.Dto.LoginReq;
+import com.sprint.mvc.service.Login;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class LoginController {
 
-    private Login login;
+    private final Login login;
 
-    public LoginController(Login login) {
-        this.login = login;
-    }
 
     @PostMapping("/login")
-    public String loginPost(
-            @RequestParam String userId,
-            @RequestParam String password,
-            Model model
-    ) {
-        login.setUserId(userId);
-        login.setPassword(password);
-        boolean result = login.login();
+    public ResponseEntity<LoginRep> login(@RequestBody LoginReq loginReq) {
 
-        if (result) {
-            System.out.println("login success");
-        } else{
-            System.out.println("login failed");
-        }
-
-        return "login";
+        LoginRep loginResponse = login.login(loginReq);
+        return ResponseEntity.ok(loginResponse);
     }
 }
