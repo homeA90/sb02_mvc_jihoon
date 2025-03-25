@@ -45,7 +45,8 @@ public class UserRepositoryImp implements UserRepository {
     public User findByUserId(String userId) {
         return findAll().stream()
                 .filter(user -> userId.equals(user.getUserId()))
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
